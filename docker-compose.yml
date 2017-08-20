@@ -1,0 +1,22 @@
+version: '2'
+services:
+  nginx:
+    image: jkuo/nginx-proxy
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - /home/paulc/certs:/etc/nginx/certs
+      - /home/paulc/vhost.d:/etc/nginx/vhost.d:ro
+      - nginx-shared:/usr/share/nginx/html
+    networks:
+      - front-end
+
+volumes:
+  nginx-shared:
+
+networks:
+  front-end:
+    driver: bridge
